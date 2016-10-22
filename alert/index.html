@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1 maximum-scale=1, user-scalable=no">
+    <title>手机端弹出窗口</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <script src="../js/jquery1.8.3.min.js"></script>
+    <style>
+    #tip {
+        background: rgba(0, 0, 0, 0.8);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+    }
+    
+    #tip .pack {
+        width: 60%;
+        min-height: 135px;
+        margin: 0 auto;
+        background: #FFF;
+        border-radius: 10px;
+        margin-top: 60%;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 60px;
+    }
+    
+    #tip .pack h1 {
+        background: #ff8901;
+        font-size: 30px;
+        padding: 10px 0 10px 10px;
+        text-align: center;
+    }
+    
+    #tip .pack p {
+        font-size: 24px;
+        color: #666;
+        padding: 20px;
+        text-align: left;
+    }
+    
+    #tip .pack a {
+        display: block;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        background: #c9151e;
+        font-size: 26px;
+        color: #FFF;
+        line-height: 2em;
+        text-align: center;
+    }
+    
+    #bnt {
+        width: 70%;
+        background: red;
+        margin: 0 auto;
+        line-height: 3em;
+        margin-top: 60%;
+        margin-left: 15%;
+        font-size: 26px;
+        color: #fff;
+        letter-spacing: 4px;
+    }
+    </style>
+    <script type="text/javascript">
+    var phoneWidth = parseInt(window.screen.width);
+    var phoneScale = phoneWidth / 640;
+
+    var ua = navigator.userAgent;
+    if (/Android (\d+\.\d+)/.test(ua)) {
+        var version = parseFloat(RegExp.$1);
+        // andriod 2.3
+        if (version > 2.3) {
+            document.write('<meta name="viewport" content="width=640, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+            // andriod 2.3以上
+        } else {
+            document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+        }
+        // 其他系统
+    } else {
+        document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+    }
+    </script>
+</head>
+
+<body>
+    <input type="button" id="bnt" value="弹窗测试">
+    <article id="tip">
+        <div class="pack">
+            <h1>温馨提示</h1>
+            <p></p>
+            <a href="#">确定</a>
+        </div>
+    </article>
+    <script>
+    $(function() {
+        $("#tip .pack a").on("click", function() {
+            $("#tip").fadeOut()
+            $("#tip .pack p").html("")
+            return false;
+        })
+
+        function alerths(str) {
+            $("#tip").fadeIn()
+            $("#tip .pack p").html(str)
+            return false;
+        }
+
+        $('input').on('click', function() {
+            alerths("弹出来了")
+        });
+
+    })
+    </script>
+</body>
+
+</html>
